@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CreateRecipeScreen extends StatefulWidget {
@@ -13,6 +14,32 @@ class CreateRecipeScreen extends StatefulWidget {
 
 class _CreateRecipeScreenState extends State<CreateRecipeScreen> {
   File? _image;
+
+  List<IconData> _icons = [
+    FontAwesomeIcons.coffee,
+    FontAwesomeIcons.breadSlice,
+    FontAwesomeIcons.apple,
+    FontAwesomeIcons.cut,
+    FontAwesomeIcons.cut,
+    FontAwesomeIcons.apple,
+    FontAwesomeIcons.cut,
+  ];
+
+  Widget _buildIcon(int index) {
+    return Container(
+      height: 60.0,
+      width: 60.0,
+      decoration: BoxDecoration(
+        color: Colors.grey[300],
+        borderRadius: BorderRadius.circular(30.0),
+      ),
+      child: Icon(
+        _icons[index],
+        size: 25.0,
+        color: Colors.grey,
+      ),
+    );
+  }
 
   _showSelectImageDialog() {
     return Platform.isIOS ? _iosBottomSheet() : _androidDialog();
@@ -201,8 +228,85 @@ class _CreateRecipeScreenState extends State<CreateRecipeScreen> {
               ],
             ),
             SizedBox(
+              height: 30.0,
+            ),
+            Container(
+              height: 50.0,
+              width: width,
+              color: Colors.grey[300],
+              child: Row(
+                children: [
+                  Text(
+                    '  Recipe Information',
+                    style: TextStyle(
+                      fontSize: 19.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
               height: 20.0,
             ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 70.0, vertical: 0.0),
+              child: Text(
+                'Select the course type(s) that most closely match this '
+                'recipe.',
+                textAlign: TextAlign.center,
+              ),
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildIcon(0),
+                _buildIcon(1),
+                _buildIcon(2),
+                _buildIcon(3),
+              ],
+            ),
+            SizedBox(height: 20.0,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildIcon(0),
+                _buildIcon(1),
+                _buildIcon(2),
+                _buildIcon(3),
+              ],
+            ),
+            SizedBox(height: 20.0,),
+            Row(
+              children: [
+                SizedBox(width: 20.0,),
+                _buildIcon(0),
+                SizedBox(width: 40.0,),
+                _buildIcon(1),
+              ],
+            ),
+            SizedBox(height: 40.0,),
+            Divider(),
+            SizedBox(height: 20.0,),
+            Row(
+              children: [
+                Text('#Hashtags', textAlign: TextAlign.left,),
+              ],
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'e.g. #spice #dinner #myfavs',
+                labelStyle: TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+            Divider(),
+
           ],
         ),
       ),
