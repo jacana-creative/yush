@@ -180,7 +180,7 @@ class _CreateRecipeScreenState extends State<CreateRecipeScreen> {
             ),
             buildContainer(
                 Text: Text(
-                  'Ingridients',
+                  'Ingredients',
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 19.0),
                 ),
                 labelText: '+Add Ingredients'),
@@ -189,8 +189,10 @@ class _CreateRecipeScreenState extends State<CreateRecipeScreen> {
             ),
             Row(
               children: [
-                Text('   Add one ingredient per line or paste your ingredient '
-                    'list here'),
+                Flexible(
+                  child: Text('   Add one ingredient per line or paste your ingredient '
+                      'list here', maxLines: 1, overflow: TextOverflow.ellipsis,),
+                ),
               ],
             ),
             SizedBox(
