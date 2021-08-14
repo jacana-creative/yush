@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "4668791223",
+    "project_id": "yush-app-c7e9c",
+    "storage_bucket": "yush-app-c7e9c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:4668791223:android:4dd367746497efb4c87032",
+        "android_client_info": {
+          "package_name": "app.yush"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "4668791223-o62m2gn0dqt1i8i11v09com01pipg8d1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCap1IqBCsQMG1WMvR7y-6KTtAUs6ZeHmY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "4668791223-o62m2gn0dqt1i8i11v09com01pipg8d1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "4668791223-5b06kl3vbnpkd0ifodc0qjsnpglie6s9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.yush"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -98,6 +98,35 @@ class _CreateRecipeScreenState extends State<CreateRecipeScreen> {
     );
   }
 
+  _postDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Text('Also Post To'),
+          children: [
+            // CheckboxListTile(value: value, onChanged: null),
+            SimpleDialogOption(
+              child: Text('Facebook'),
+              onPressed: () => null,
+            ),
+            SimpleDialogOption(
+              child: Text('Instagram'),
+              onPressed: () => null,
+            ),
+            SimpleDialogOption(
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: Colors.redAccent),
+              ),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   _handleImage(ImageSource source) async {
     Navigator.pop(context);
     PickedFile? imageFile =
@@ -108,6 +137,8 @@ class _CreateRecipeScreenState extends State<CreateRecipeScreen> {
       });
     }
   }
+  bool _value = false;
+  dynamic val = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -132,8 +163,8 @@ class _CreateRecipeScreenState extends State<CreateRecipeScreen> {
         ),
         actions: [
           TextButton(
-            onPressed: null,
-            child: Text('Next'),
+            onPressed: _postDialog,
+            child: Text('Save'),
           ),
         ],
       ),
@@ -172,44 +203,59 @@ class _CreateRecipeScreenState extends State<CreateRecipeScreen> {
             ),
             Row(
               children: [
-                Text('   Name of Recipe'),
-              ],
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            buildContainer(
-                Text: Text(
-                  'Ingredients',
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 19.0),
-                ),
-                labelText: '+Add Ingredients'),
-            SizedBox(
-              height: 10.0,
-            ),
-            Row(
-              children: [
-                Flexible(
-                  child: Text('   Add one ingredient per line or paste your ingredient '
-                      'list here', maxLines: 1, overflow: TextOverflow.ellipsis,),
+                Container(
+                  height: 30.0,
+                  width: 200.0,
+                  child: TextFormField(
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      hintText: 'Name of Recipe',
+                      hintStyle: TextStyle(
+                        color: Colors.black,
+                      ),
+                      labelStyle: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
             SizedBox(
               height: 20.0,
             ),
+            // buildContainer(
+            //     Text: Text(
+            //       'Ingredients',
+            //       style: TextStyle(fontWeight: FontWeight.w500, fontSize: 19.0),
+            //     ),
+            //     labelText: '+Add Ingredients'),
+            // SizedBox(
+            //   height: 10.0,
+            // ),
+            // Row(
+            //   children: [
+            //     Flexible(
+            //       child: Text('   Add one ingredient per line or paste your ingredient '
+            //           'list here', maxLines: 1, overflow: TextOverflow.ellipsis,),
+            //     ),
+            //   ],
+            // ),
+            // SizedBox(
+            //   height: 20.0,
+            // ),
             buildContainer(
                 Text: Text(
                   'Directions',
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 19.0),
                 ),
-                labelText: '+Separate these ingredients into groups'),
+                labelText: '+ Add Ingredients'),
             SizedBox(
               height: 10.0,
             ),
             Row(
               children: [
-                Text('   1'),
+                Icon(Icons.info_outline),
               ],
             ),
             SizedBox(
@@ -225,8 +271,14 @@ class _CreateRecipeScreenState extends State<CreateRecipeScreen> {
               height: 10.0,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('   Name of Recipe'),
+                Icon(Icons.sticky_note_2_outlined),
+                SizedBox(width: 5.0,),
+                Flexible(
+                  child: Text('add cooking tips, suggestions, or thoughts for those '
+                      'that cook this recipe'),
+                ),
               ],
             ),
             SizedBox(
@@ -272,7 +324,9 @@ class _CreateRecipeScreenState extends State<CreateRecipeScreen> {
                 _buildIcon(3),
               ],
             ),
-            SizedBox(height: 20.0,),
+            SizedBox(
+              height: 20.0,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -282,33 +336,279 @@ class _CreateRecipeScreenState extends State<CreateRecipeScreen> {
                 _buildIcon(3),
               ],
             ),
-            SizedBox(height: 20.0,),
+            SizedBox(
+              height: 20.0,
+            ),
             Row(
               children: [
-                SizedBox(width: 20.0,),
+                SizedBox(
+                  width: 20.0,
+                ),
                 _buildIcon(0),
-                SizedBox(width: 40.0,),
+                SizedBox(
+                  width: 40.0,
+                ),
                 _buildIcon(1),
               ],
             ),
-            SizedBox(height: 40.0,),
-            Divider(),
-            SizedBox(height: 20.0,),
-            Row(
-              children: [
-                Text('#Hashtags', textAlign: TextAlign.left,),
-              ],
+            SizedBox(
+              height: 40.0,
             ),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'e.g. #spice #dinner #myfavs',
-                labelStyle: TextStyle(
-                  color: Colors.grey,
-                ),
+            Divider(),
+            SizedBox(
+              height: 20.0,
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        '#Hashtags',
+                        textAlign: TextAlign.left,
+                      ),
+                    ],
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'e.g. #spice #dinner #myfavs',
+                      labelStyle: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                  Divider(),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Container(
+                    child: Column(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                ),
+                                height: 50.0,
+                                width: 160,
+                                child: Center(
+                                  child: Text('How many servings?'),
+                                ),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                ),
+                                height: 50.0,
+                                width: 160.0,
+                                child: TextFormField(
+                                  textAlign: TextAlign.center,
+                                  decoration: InputDecoration(
+                                    hintText: 'Missing',
+                                    hintStyle: TextStyle(
+                                      color: Colors.grey,
+                                    ),
+                                    labelStyle: TextStyle(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                ),
+                                height: 50.0,
+                                width: 160,
+                                child: Center(
+                                  child: Text('How much in a serving?'),
+                                ),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                ),
+                                height: 50.0,
+                                width: 160.0,
+                                child: TextFormField(
+                                  textAlign: TextAlign.center,
+                                  decoration: InputDecoration(
+                                    hintText: '1 Slice',
+                                    hintStyle: TextStyle(
+                                      color: Colors.grey,
+                                    ),
+                                    labelStyle: TextStyle(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                ),
+                                height: 50.0,
+                                width: 160,
+                                child: Center(
+                                  child: Text('How long to prep?'),
+                                ),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                ),
+                                height: 50.0,
+                                width: 160.0,
+                                child: TextFormField(
+                                  textAlign: TextAlign.center,
+                                  decoration: InputDecoration(
+                                    hintText: 'Missing',
+                                    hintStyle: TextStyle(
+                                      color: Colors.grey,
+                                    ),
+                                    labelStyle: TextStyle(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                ),
+                                height: 50.0,
+                                width: 160,
+                                child: Center(
+                                  child: Text('How long to cook?'),
+                                ),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                ),
+                                height: 50.0,
+                                width: 160.0,
+                                child: TextFormField(
+                                  textAlign: TextAlign.center,
+                                  decoration: InputDecoration(
+                                    hintText: 'Missing',
+                                    hintStyle: TextStyle(
+                                      color: Colors.grey,
+                                    ),
+                                    labelStyle: TextStyle(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 10.0,),
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 10.0),
+                          color: Colors.grey[300],
+                          height: 50.0,
+                          child: Row(
+                            children: [
+                              Text(
+                                'Original Recipe Privacy',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Container(
+                              child: Row(
+                                children: [
+                                  Radio(
+                                      value: 1,
+                                      groupValue: val,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          val = value;
+                                        });
+                                      }),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('Public', style: TextStyle
+                                        (fontWeight: FontWeight.bold),),
+                                      Text('Recipe is searchable in our '
+                                          'Discovery database'),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              child: Row(
+                                children: [
+                                  Radio(
+                                      value: 2,
+                                      groupValue: val,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          val = value;
+                                        });
+                                      }),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('Secret', style: TextStyle
+                                        (fontWeight: FontWeight.bold),),
+                                      Text('Only you can see this recipe'),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
-            Divider(),
-
           ],
         ),
       ),

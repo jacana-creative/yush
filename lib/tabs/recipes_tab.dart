@@ -20,34 +20,44 @@ class _RecipesTabState extends State<RecipesTab> {
 
   @override
   Widget build(BuildContext context) {
+    // Navigator.of(context).pop();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Row(
-          children: [
-            Flexible(
-              child: TextField(
-                controller: _searchController,
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: 15.0),
-                  border: InputBorder.none,
-                  hintText: 'Search recipes',
-                  prefixIcon: Icon(
-                    Icons.search,
-                    size: 30.0,
+        title: Padding(
+          padding: EdgeInsets.symmetric(vertical: 20.0),
+          child: Container(
+            height: 35.0,
+            child: Row(
+              children: [
+                Flexible(
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        // width: 0.0 produces a thin "hairline" border
+                        borderSide:
+                            const BorderSide(color: Colors.grey, width: 0.0),
+                      ),
+                      contentPadding: EdgeInsets.symmetric(vertical: 10.0),
+                      border: OutlineInputBorder(),
+                      hintText: 'Search recipes',
+                      hintStyle: TextStyle(color: Colors.grey),
+
+                      // suffixIcon: IconButton(
+                      //   onPressed: _clearSearch,
+                      //   icon: Icon(Icons.clear),
+                      // ),
+                    ),
+                    onSubmitted: (input) {
+                      print('input');
+                    },
                   ),
-                  suffixIcon: IconButton(
-                    onPressed: _clearSearch,
-                    icon: Icon(Icons.clear),
-                  ),
-                  filled: true,
                 ),
-                onSubmitted: (input) {
-                  print('input');
-                },
-              ),
+              ],
             ),
-          ],
+          ),
         ),
         iconTheme: IconThemeData(color: Colors.green),
       ),
@@ -104,226 +114,356 @@ class _RecipesTabState extends State<RecipesTab> {
               ),
             ),
             ListTile(
-              title: Text('Meal Type'),
-              trailing: IconButton(
-                icon: Icon(Icons.keyboard_arrow_down),
-                onPressed: () => null,
+              title: DropdownButton<String>(
+                hint: Text('Meal Type'),
+                items: <String>[
+                  'Breakfast',
+                  'Lunch',
+                  'Dinner',
+                  'Snacks',
+                  'Drinks',
+                  'Salad',
+                ].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: new Text(value),
+                  );
+                }).toList(),
+                onChanged: (_) {},
               ),
-              onTap: () => null,
             ),
             ListTile(
-              title: Text('Cook Time'),
-              trailing: IconButton(
-                icon: Icon(Icons.keyboard_arrow_down),
-                onPressed: () => null,
+              title: DropdownButton<String>(
+                hint: Text('Cook Time'),
+                items: <String>[
+                  'Below 10 min',
+                  'Between 10 - 30 min',
+                  'More than 30 min',
+                ].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: new Text(value),
+                  );
+                }).toList(),
+                onChanged: (_) {},
               ),
-              onTap: () => null,
             ),
             ListTile(
-              title: Text('Special Diets'),
-              trailing: IconButton(
-                icon: Icon(Icons.keyboard_arrow_down),
-                onPressed: () => null,
+              title: DropdownButton<String>(
+                hint: Text('Special Diets'),
+                items: <String>[
+                  'Vegetarian',
+                  'Vegan',
+                  'Gluten Free',
+                  'Dairy Free',
+                  'Low Carb',
+                  'Keto',
+                ].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: new Text(value),
+                  );
+                }).toList(),
+                onChanged: (_) {},
               ),
-              onTap: () => null,
             ),
           ],
         ),
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RecipeScreen(),
-                        ),
-                      ),
-                      child: Container(
-                        margin: EdgeInsets.all(2.0),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets/images/macarons.jpg'),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RecipeScreen(),
-                        ),
-                      ),
-                      child: Container(
-                        margin: EdgeInsets.all(2.0),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets/images/food1.jpg'),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RecipeScreen(),
-                        ),
-                      ),
-                      child: Container(
-                        margin: EdgeInsets.all(2.0),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets/images/food2.jpg'),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+      body: GridView.count(
+        crossAxisCount: 3,
+        crossAxisSpacing: 2,
+        mainAxisSpacing: 2,
+        children: [
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecipeScreen(),
               ),
             ),
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RecipeScreen(),
-                        ),
-                      ),
-                      child: Container(
-                        margin: EdgeInsets.all(2.0),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets/images/food3.jpeg'),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RecipeScreen(),
-                        ),
-                      ),
-                      child: Container(
-                        margin: EdgeInsets.all(2.0),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets/images/food4.jpg'),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RecipeScreen(),
-                        ),
-                      ),
-                      child: Container(
-                        margin: EdgeInsets.all(2.0),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets/images/food5.jpg'),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/macarons.jpg'),
+                ),
               ),
             ),
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RecipeScreen(),
-                        ),
-                      ),
-                      child: Container(
-                        margin: EdgeInsets.all(2.0),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets/images/food6.jpg'),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RecipeScreen(),
-                        ),
-                      ),
-                      child: Container(
-                        margin: EdgeInsets.all(2.0),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets/images/food7.jpg'),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RecipeScreen(),
-                        ),
-                      ),
-                      child: Container(
-                        margin: EdgeInsets.all(2.0),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets/images/food8.png'),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+          ),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecipeScreen(),
               ),
             ),
-          ],
-        ),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/food1.jpg'),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecipeScreen(),
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/food2.jpg'),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecipeScreen(),
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/food3.jpeg'),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecipeScreen(),
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/food4.jpg'),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecipeScreen(),
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/food5.jpg'),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecipeScreen(),
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/food6.jpg'),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecipeScreen(),
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/food7.jpg'),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecipeScreen(),
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/food8.png'),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecipeScreen(),
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/macarons.jpg'),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecipeScreen(),
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/food1.jpg'),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecipeScreen(),
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/food2.jpg'),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecipeScreen(),
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/food3.jpeg'),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecipeScreen(),
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/food4.jpg'),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecipeScreen(),
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/food5.jpg'),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecipeScreen(),
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/food6.jpg'),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecipeScreen(),
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/food7.jpg'),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecipeScreen(),
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/food8.png'),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

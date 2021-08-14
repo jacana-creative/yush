@@ -1,5 +1,13 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:yush/screens/edit_profile_screen.dart';
+import 'package:yush/screens/notifications_screen.dart';
+import 'package:yush/screens/settings_screen.dart';
+import 'package:yush/tabs/user_meal_plans_tab.dart';
+import 'package:yush/tabs/user_recipes_tab.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -8,174 +16,222 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   int _selectedIndex = 0;
-  List<Widget> _plans = [
-    TextButton( 
-      onPressed: () {},
-      child: Column(
-        children: [
-          Text(
-            '11',
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600,),
-          ),
-          Text(
-            'Cookbooks',
-            style: TextStyle(color: Colors.black54),
-          ),
-        ],
-      ),
-    ),
-    TextButton(
-      onPressed: () {},
-      child: Column(
-        children: [
-          Text(
-            '11',
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
-          ),
-          Text(
-            'Meal Plans',
-            style: TextStyle(color: Colors.black54),
-          ),
-        ],
-      ),
-    ),
-    TextButton(
-      onPressed: () {},
-      child: Column(
-        children: [
-          Text(
-            '197',
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
-          ),
-          Text(
-            'Recipes',
-            style: TextStyle(color: Colors.black54),
-          ),
-        ],
-      ),
-    ),
-  ];
-
-  Widget _buildPlan(int index) {
-    return Container(
-      child: TextButton(
-        child: _plans[index],
-        onPressed: () {
-          setState(() {
-            _selectedIndex = index;
-          });
-          print(_selectedIndex);
-        },
-        style: ButtonStyle(
-          foregroundColor: _selectedIndex == index ?  MaterialStateProperty.all
-            (Colors.green) : MaterialStateProperty.all(Colors.grey),
-        ),
-      ),
-    );
-  }
+  List<Widget> _plans = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
+          actionsIconTheme: IconThemeData(color: Colors.black),
+          actions: [
+            IconButton(
+              icon: Icon(FontAwesomeIcons.heart),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NotificationsScreen(),
+                ),
+              ),
+            ),
+            IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SettingsScreen(),
+                ),
+              ),
+            )
+          ],
           title: Center(
             child: Text(
-              'Yush!',
+              'alphasin',
               style: TextStyle(
                 color: Colors.black,
-                fontFamily: 'Billabong',
-                fontSize: 35.0,
               ),
             ),
           ),
         ),
         backgroundColor: Colors.white,
-        body: ListView(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 0.0),
-              child: Row(
-                children: <Widget>[
-                  CircleAvatar(
-                    radius: 50.0,
-                    backgroundImage: NetworkImage(
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTowV0YdzOlp5iXoAiR769dC8I1duXXw3pPQ&usqp=CAU"),
-                  ),
-                  const SizedBox(
-                    width: 8.0,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'Username',
-                          style: TextStyle(
-                              fontSize: 20.0, fontWeight: FontWeight.w600),
-                        ),
-                        Flexible(
-                          child: Text(
-                            'Mel helps families everywhere save their '
-                            'sanity by making meal planning simple with'
-                            ' easy',
-                            style: TextStyle(
-                              fontSize: 15.0,
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.fromLTRB(20.0, 30.0, 10.0, 0.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Container(
+                      child: CircleAvatar(
+                        radius: 50.0,
+                        backgroundImage: NetworkImage(
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTowV0YdzOlp5iXoAiR769dC8I1duXXw3pPQ&usqp=CAU"),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 8.0,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            '0',
+                            style: TextStyle(),
+                          ),
+                          Flexible(
+                            child: Text(
+                              'Recipes',
+                              style: TextStyle(),
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            '0',
+                            style: TextStyle(),
+                          ),
+                          Flexible(
+                            child: Text(
+                              'Followers',
+                              style: TextStyle(),
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            '0',
+                            style: TextStyle(),
+                          ),
+                          Flexible(
+                            child: Text(
+                              'Following',
+                              style: TextStyle(),
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 25.0, vertical: 5.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Aayush Singla',
+                      style: TextStyle(
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.w500
+                      ),
+                    ),
+                    SizedBox(height: 10.0,),
+                    Text('Alpha Beta gamma'),
+                    SizedBox(height: 8.0,),
+                    Center(
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          minimumSize: Size(300.0, 40.0),
+                          backgroundColor: Colors.grey[300],
+                        ),
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditProfileScreen(),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 25.0, vertical: 5.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: 100.0,
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Following',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.blue),
+                        child: Text('Edit Profile', style: TextStyle(color:
+                        Colors.grey[600]),),
                       ),
                     ),
-                  ),
-                  Text('1631 Followers'),
-                  Text('9 Following'),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 1.0, vertical: 10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: _plans
-                        .asMap()
-                        .entries
-                        .map((MapEntry map) => _buildPlan(map.key))
-                        .toList(),
-                  ),
-                  Divider(),
-                ],
+              Divider(),
+              DefaultTabController(
+                
+                length: 2,
+                child: Column(
+                  children: [
+                    Container(
+                      child: TabBar(
+                        indicatorColor: Colors.green,
+                        indicatorSize: TabBarIndicatorSize.label,
+                        tabs: [
+                          Tab(
+                            child: Container(
+                              decoration: BoxDecoration(),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Column(
+                                  children: [
+                                    Text('4', style: TextStyle(color: Colors
+                                        .black),),
+                                    Text(
+                                      'Meal Plans',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Tab(
+                            child: Container(
+                              decoration: BoxDecoration(),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Column(
+                                  children: [
+                                    Text('3', style: TextStyle(color: Colors
+                                            .black),),
+                                    Text(
+                                      'Recipes',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height,
+                      child: TabBarView(children: [
+                       UserMealPlansTab(),
+                        UserRecipesTab(),
+                      ]),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            
-          ],
+            ],
+          ),
         ));
   }
 }

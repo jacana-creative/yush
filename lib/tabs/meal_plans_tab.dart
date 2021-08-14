@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:yush/models/recipe_model.dart';
+import 'package:yush/screens/meal_plans_detail_screen.dart';
 
 class MealPlansTab extends StatefulWidget {
   const MealPlansTab({Key? key}) : super(key: key);
@@ -14,36 +17,43 @@ class _MealPlansTabState extends State<MealPlansTab> {
     _searchController.clear();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Row(
-          children: [
-            Flexible(
-              child: TextField(
-                controller: _searchController,
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: 15.0),
-                  border: InputBorder.none,
-                  hintText: 'Search Meal Plans',
-                  prefixIcon: Icon(
-                    Icons.search,
-                    size: 30.0,
+        title: Container(
+          height: 35.0,
+          child: Row(
+            children: [
+              Flexible(
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      // width: 0.0 produces a thin "hairline" border
+                      borderSide:
+                          const BorderSide(color: Colors.grey, width: 0.0),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(vertical: 10.0),
+                    border: OutlineInputBorder(),
+                    hintText: 'Search Meal Plans',
+                    hintStyle: TextStyle(color: Colors.grey),
+
+                    // suffixIcon: IconButton(
+                    //   onPressed: _clearSearch,
+                    //   icon: Icon(Icons.clear),
+                    // ),
                   ),
-                  suffixIcon: IconButton(
-                    onPressed: _clearSearch,
-                    icon: Icon(Icons.clear),
-                  ),
-                  filled: true,
+                  onSubmitted: (input) {
+                    print('input');
+                  },
                 ),
-                onSubmitted: (input) {
-                  print('input');
-                },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         iconTheme: IconThemeData(color: Colors.green),
       ),
@@ -59,7 +69,7 @@ class _MealPlansTabState extends State<MealPlansTab> {
                     icon: Icon(Icons.clear),
                   ),
                   Text(
-                    'Filter Meal Plans',
+                    'Filter MealPlans',
                     style: TextStyle(
                       fontSize: 17.0,
                     ),
@@ -72,7 +82,7 @@ class _MealPlansTabState extends State<MealPlansTab> {
                     ),
                     style: ButtonStyle(
                         backgroundColor:
-                        MaterialStateProperty.all(Colors.grey[300])),
+                            MaterialStateProperty.all(Colors.grey[300])),
                   ),
                 ],
               ),
@@ -87,7 +97,7 @@ class _MealPlansTabState extends State<MealPlansTab> {
                   Text('Ingredients'),
                   Padding(
                     padding:
-                    EdgeInsets.symmetric(horizontal: 0.0, vertical: 5.0),
+                        EdgeInsets.symmetric(horizontal: 0.0, vertical: 5.0),
                     child: TextFormField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -105,8 +115,10 @@ class _MealPlansTabState extends State<MealPlansTab> {
                 items: <String>[
                   'Breakfast',
                   'Lunch',
-                  'Snack',
                   'Dinner',
+                  'Snacks',
+                  'Drinks',
+                  'Salad',
                 ].map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -120,10 +132,9 @@ class _MealPlansTabState extends State<MealPlansTab> {
               title: DropdownButton<String>(
                 hint: Text('Cook Time'),
                 items: <String>[
-                  'Breakfast',
-                  'Lunch',
-                  'Snack',
-                  'Dinner',
+                  'Below 10 min',
+                  'Between 10 - 30 min',
+                  'More than 30 min',
                 ].map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -137,10 +148,12 @@ class _MealPlansTabState extends State<MealPlansTab> {
               title: DropdownButton<String>(
                 hint: Text('Special Diets'),
                 items: <String>[
-                  'Breakfast',
-                  'Lunch',
-                  'Snack',
-                  'Dinner',
+                  'Vegetarian',
+                  'Vegan',
+                  'Gluten Free',
+                  'Dairy Free',
+                  'Low Carb',
+                  'Keto',
                 ].map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -153,8 +166,151 @@ class _MealPlansTabState extends State<MealPlansTab> {
           ],
         ),
       ),
-      body: Column(
-        children: [],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: 1200.0,
+              color: Colors.grey[300],
+              child: ListView.builder(
+                itemCount: recipes.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                      margin: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
+                      height: 150.0,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(20.0),
+                            child: GestureDetector(
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      MealPlansDetailScreen(),
+                                ),
+                              ),
+                              child: Image(
+                                width: 120.0,
+                                height: 150.0,
+                                image: AssetImage(recipes[index].imageUrl),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10.0,),
+                          Expanded(
+                            child: Container(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            MealPlansDetailScreen(),
+                                      ),
+                                    ),
+                                    child: Container(
+                                      margin: EdgeInsets.symmetric
+                                        (vertical: 8.0),
+                                      width: 120.0,
+                                      child: GestureDetector(
+                                        onTap: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                MealPlansDetailScreen(),
+                                          ),
+                                        ),
+                                        child: Text(
+                                          recipes[index].name,
+                                          style: TextStyle(
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            MealPlansDetailScreen(),
+                                      ),
+                                    ),
+                                    child: Text(
+                                        'This is very very tasty food that will fill your soul and '
+                                        'leave you wanting more everyday',
+                                      textAlign: TextAlign.start,
+                                      overflow: TextOverflow.clip,
+                                      maxLines: 3,
+                                    ),
+                                  ),
+                                  SizedBox(height: 8.0,),
+                                  GestureDetector(
+                                    onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            MealPlansDetailScreen(),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      recipes[index].userAccount,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                 SizedBox(height: 8.0,),
+                                 Row(
+                                   children: [
+                                     Icon(FontAwesomeIcons.heart, size: 15.0,),
+                                     Text(' Liked by '),
+                                     Text(
+                                       recipes[index].rating
+                                     ),
+                                     Text(' People'),
+                                   ],
+                                 ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                    // Positioned(
+                    //   left: 10.0,
+                    //   top: 15.0,
+                    //   bottom: 15.0,
+                    //   child: ClipRRect(
+                    //     borderRadius: BorderRadius.circular(20.0),
+                    //     child: Image(
+                    //       width: 120.0,
+                    //       image: AssetImage(recipes[index].imageUrl),
+                    //       fit: BoxFit.cover,
+                    //     ),
+                    //   ),
+                    // )
+
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

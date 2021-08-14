@@ -74,25 +74,79 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       ),
     );
   }
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  void _openEndDrawer() {
+    _scaffoldKey.currentState!.openEndDrawer();
+  }
+
+  void _closeEndDrawer() {
+    Navigator.of(context).pop();
+  }
+
+  var follow = 'Follow';
+  var following = 'Following';
+
+  List<bool> _values = [true, false, true, false, false];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: IconThemeData(color: Colors.black,),
           backgroundColor: Colors.white,
           title: Center(
-            child: Text(
-              'Yush!',
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Billabong',
-                fontSize: 35.0,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: Icon(
+                      Icons.arrow_back,
+                    color: Colors.black,
+                  ),
+                ),
+                Text(
+                  'Yush!',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Billabong',
+                    fontSize: 35.0,
+                  ),
+                ),
+                Text('#', style: TextStyle(color: Colors.white),)
+              ],
             ),
           ),
+          actions: [
+            Builder(
+              builder: (context) => IconButton(
+                icon: Icon(Icons.notifications_none_outlined),
+                onPressed: () => Scaffold.of(context).openEndDrawer(),
+                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+              ),
+            ),
+          ],
         ),
         backgroundColor: Colors.white,
+        endDrawer: Drawer(
+          child: ListView(
+            children: [
+              ListTile(
+                leading: IconButton(onPressed: _closeEndDrawer, icon: Icon(Icons.clear),),
+                title: Text('Benachrichtigungen', style: TextStyle(fontSize: 18.0),),
+              ),
+              ListTile(
+                title: Text('Recipe', style: TextStyle(fontSize: 18.0),),
+                trailing: Switch(value: _values[1], onChanged: null),
+              ),
+              ListTile(
+                title: Text('Meal Plan', style: TextStyle(fontSize: 18.0),),
+                trailing: Switch(value: _values[2], onChanged: null),
+              ),
+            ],
+          ),
+        ),
+
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -118,6 +172,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             style: TextStyle(
                                 fontSize: 20.0, fontWeight: FontWeight.w600),
                           ),
+                          SizedBox(height: 5.0,),
                           Flexible(
                             child: Text(
                               'Michael helps families everywhere save their '
@@ -128,6 +183,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               ),
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          SizedBox(height: 5.0,),
+                          Text(
+                            'mayerkitchen.com',
+                            style: TextStyle(
+                              color: Colors.orangeAccent,
+                              fontSize: 15.0,
                             ),
                           ),
                         ],
@@ -145,9 +208,16 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     Container(
                       width: 100.0,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            if(follow != following) {
+                              follow = 'Following';
+                            }
+                            else{follow = 'Follow';}
+                          });
+                        },
                         child: Text(
-                          'Following',
+                          follow,
                           style: TextStyle(color: Colors.white),
                         ),
                         style: ButtonStyle(

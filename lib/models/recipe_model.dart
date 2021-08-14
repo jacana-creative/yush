@@ -4,7 +4,7 @@ class Recipe {
   String details;
   String userAccount;
   String type;
-  int rating;
+  String rating;
 
 
   Recipe({
@@ -25,7 +25,7 @@ List<Recipe> recipes = [
     details: 'This is a very very tasty food that will fill your soul and '
         'leave you wanting moe everyday',
     type: 'Snack',
-    rating: 4,
+    rating: '400',
     userAccount: '@eeazypeazymeals',
   ),
   Recipe(
@@ -34,7 +34,7 @@ List<Recipe> recipes = [
     details: 'This is a very very tasty food that will fill your soul and '
         'leave you wanting moe everyday',
     type: 'Snack',
-    rating: 4,
+    rating: '210',
     userAccount: '@eeazypeazymeals',
   ),
   Recipe(
@@ -43,7 +43,7 @@ List<Recipe> recipes = [
     details: 'This is a very very tasty food that will fill your soul and '
         'leave you wanting moe everyday',
     type: 'Snack',
-    rating: 4,
+    rating: '369',
     userAccount: '@eeazypeazymeals',
   ),
   Recipe(
@@ -52,7 +52,7 @@ List<Recipe> recipes = [
     details: 'This is a very very tasty food that will fill your soul and '
         'leave you wanting moe everyday',
     type: 'Snack',
-    rating: 4,
+    rating: '252',
     userAccount: '@eeazypeazymeals',
   ),
   Recipe(
@@ -61,7 +61,7 @@ List<Recipe> recipes = [
     details: 'This is a very very tasty food that will fill your soul and '
         'leave you wanting moe everyday',
     type: 'Snack',
-    rating: 4,
+    rating: '1',
     userAccount: '@eeazypeazymeals',
   ),
   Recipe(
@@ -70,7 +70,7 @@ List<Recipe> recipes = [
     details: 'This is a very very tasty food that will fill your soul and '
         'leave you wanting moe everyday',
     type: 'Snack',
-    rating: 4,
+    rating: '4',
     userAccount: '@eeazypeazymeals',
   ),
   Recipe(
@@ -79,7 +79,7 @@ List<Recipe> recipes = [
     details: 'This is a very very tasty food that will fill your soul and '
         'leave you wanting moe everyday',
     type: 'Snack',
-    rating: 4,
+    rating: '4',
     userAccount: '@eeazypeazymeals',
   ),
   Recipe(
@@ -88,7 +88,7 @@ List<Recipe> recipes = [
     details: 'This is a very very tasty food that will fill your soul and '
         'leave you wanting moe everyday',
     type: 'Snack',
-    rating: 4,
+    rating: '4',
     userAccount: '@eeazypeazymeals',
   ),
   Recipe(
@@ -97,7 +97,7 @@ List<Recipe> recipes = [
     details: 'This is a very very tasty food that will fill your soul and '
         'leave you wanting moe everyday',
     type: 'Snack',
-    rating: 4,
+    rating: '4',
     userAccount: '@eeazypeazymeals',
   ),
 

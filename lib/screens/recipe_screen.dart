@@ -4,8 +4,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:yush/screens/ingredients_to_list_screen.dart';
 import 'package:yush/screens/profile_screen.dart';
+import 'package:yush/screens/recipe_to_planner_screen.dart';
 import 'package:yush/screens/user_profile_screen.dart';
+import 'package:yush/tabs/directions_tab.dart';
+import 'package:yush/tabs/ingredients_tab.dart';
 
 class RecipeScreen extends StatefulWidget {
   const RecipeScreen({Key? key}) : super(key: key);
@@ -15,6 +19,10 @@ class RecipeScreen extends StatefulWidget {
 }
 
 class _RecipeScreenState extends State<RecipeScreen> {
+  final tabColor = Colors.lightGreen[800];
+  var follow = 'Follow';
+  var following = 'Following';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,18 +39,26 @@ class _RecipeScreenState extends State<RecipeScreen> {
                   vertical: 17.0,
                   horizontal: 15.0,
                 ),
-                child: Column(
-                  children: [
-                    Icon(
-                      FontAwesomeIcons.bookmark,
-                      size: 20.0,
-                      color: Colors.black54,
+                child: GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfileScreen(),
                     ),
-                    Text(
-                      'Save',
-                      style: TextStyle(color: Colors.black54),
-                    ),
-                  ],
+                  ),
+                  child: Column(
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.bookmark,
+                        size: 20.0,
+                        color: Colors.black54,
+                      ),
+                      Text(
+                        'Save',
+                        style: TextStyle(color: Colors.black54),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Padding(
@@ -50,18 +66,53 @@ class _RecipeScreenState extends State<RecipeScreen> {
                   vertical: 17.0,
                   horizontal: 15.0,
                 ),
-                child: Column(
-                  children: [
-                    Icon(
-                      Icons.calendar_today,
-                      size: 20.0,
-                      color: Colors.black54,
+                child: GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RecipeToPlannerScreen(),
                     ),
-                    Text(
-                      'Plan',
-                      style: TextStyle(color: Colors.black54),
+                  ),
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.calendar_today,
+                        size: 20.0,
+                        color: Colors.black54,
+                      ),
+                      Text(
+                        'Plan',
+                        style: TextStyle(color: Colors.black54),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 17.0,
+                  horizontal: 15.0,
+                ),
+                child: GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => IngredientsToListScreen(),
                     ),
-                  ],
+                  ),
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.assignment_outlined,
+                        size: 20.0,
+                        color: Colors.black54,
+                      ),
+                      Text(
+                        'Shop',
+                        style: TextStyle(color: Colors.black54),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Padding(
@@ -69,37 +120,21 @@ class _RecipeScreenState extends State<RecipeScreen> {
                   vertical: 17.0,
                   horizontal: 15.0,
                 ),
-                child: Column(
-                  children: [
-                    Icon(
-                      Icons.assignment_outlined,
-                      size: 20.0,
-                      color: Colors.black54,
-                    ),
-                    Text(
-                      'Shop',
-                      style: TextStyle(color: Colors.black54),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 17.0,
-                  horizontal: 15.0,
-                ),
-                child: Column(
-                  children: [
-                    Icon(
-                      FontAwesomeIcons.share,
-                      size: 20.0,
-                      color: Colors.black54,
-                    ),
-                    Text(
-                      'Share',
-                      style: TextStyle(color: Colors.black54),
-                    ),
-                  ],
+                child: GestureDetector(
+                  onTap: () => _onButtonPressed(),
+                  child: Column(
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.share,
+                        size: 20.0,
+                        color: Colors.black54,
+                      ),
+                      Text(
+                        'Share',
+                        style: TextStyle(color: Colors.black54),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -199,7 +234,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                       SizedBox(
                         height: 5.0,
                       ),
-                      Text('4 servings'),
+                      Text('4 serving(s)'),
                     ],
                   ),
                 ],
@@ -224,18 +259,27 @@ class _RecipeScreenState extends State<RecipeScreen> {
                       height: 70.0,
                       width: 70.0,
                       decoration: BoxDecoration(
-                          image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage('https://freedesignfile'
-                            '.com/upload/2017/05/Female-chef-Stock-Photo-01.jpg'),
-                      )),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage('https://freedesignfile'
+                              '.com/upload/2017/05/Female-chef-Stock-Photo-01.jpg'),
+                        ),
+                      ),
                     ),
                   ),
-                  Text(
-                    'Michael Mayer',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w600,
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserProfileScreen(),
+                      ),
+                    ),
+                    child: Text(
+                      'Michael Mayer',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   Text(
@@ -245,112 +289,180 @@ class _RecipeScreenState extends State<RecipeScreen> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Text(
-                    'Follow',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w600,
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserProfileScreen(),
+                      ),
+                    ),
+                    child: TextButton(
+                      onPressed: () {
+                        setState(() {
+                          if (follow != following) {
+                            follow = 'Following';
+                          } else {
+                            follow = 'Follow';
+                          }
+                        });
+                      },
+                      child: Text(
+                        follow,
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
             Divider(),
-            SizedBox(height: 20.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                TextButton(
-                  style: ButtonStyle(
-
-                  ),
-                  onPressed: () {},
-                  child: Text(
-                    'Ingredients',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.black
+            SizedBox(height: 10.0),
+            TextButton(
+              onPressed: null,
+              style: OutlinedButton.styleFrom(
+                minimumSize: Size(200.0, 40.0),
+                backgroundColor: Colors.blue,
+              ),
+              child: Text(
+                'Add to week plan',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            SizedBox(height: 10.0),
+            DefaultTabController(
+              length: 2,
+              child: Column(
+                children: [
+                  Container(
+                    child: TabBar(
+                      indicatorColor: Colors.green,
+                      indicatorSize: TabBarIndicatorSize.label,
+                      tabs: [
+                        Tab(
+                          child: Container(
+                            decoration: BoxDecoration(),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Ingredients',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Tab(
+                          child: Container(
+                            decoration: BoxDecoration(),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Directions',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-                TextButton(
-                  onPressed: null,
-                  child: Text(
-                    'Directions',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                    ),
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: TabBarView(children: [
+                      IngredientsTab(),
+                      DirectionsTab(),
+                    ]),
                   ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-              child: Card(
-                elevation: 2,
-                shape: RoundedRectangleBorder(),
-                child: ListTile(
-                  subtitle: Text('4 Pieces'),
-                  tileColor: Colors.grey[300],
-                  title: Text('Beef Tenderloin'),
-                  trailing: Icon(Icons.add, size: 35.0, color: Colors
-                      .teal,),
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 30.0, vertical: 0),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-              child: Card(
-                elevation: 2,
-                shape: RoundedRectangleBorder(),
-                child: ListTile(
-                  subtitle: Text('1 Package'),
-                  tileColor: Colors.grey[300],
-                  title: Text('Beef Broth'),
-                  trailing: Icon(Icons.add, size: 35.0, color: Colors
-                      .teal,),
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 30.0, vertical: 0),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-              child: Card(
-                elevation: 2,
-                shape: RoundedRectangleBorder(),
-                child: ListTile(
-                  subtitle: Text('12 oz'),
-                  tileColor: Colors.grey[300],
-                  title: Text('Hash Browns'),
-                  trailing: Icon(Icons.add, size: 35.0, color: Colors
-                      .teal,),
-                  contentPadding:
-                  EdgeInsets.symmetric(horizontal: 30.0, vertical: 0),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-              child: Card(
-                elevation: 2,
-                shape: RoundedRectangleBorder(),
-                child: ListTile(
-                  subtitle: Text('4 Pieces'),
-                  tileColor: Colors.grey[300],
-                  title: Text('Beef Tenderloin'),
-                  trailing: Icon(Icons.add, size: 35.0, color: Colors
-                      .teal,),
-                  contentPadding:
-                  EdgeInsets.symmetric(horizontal: 30.0, vertical: 0),
-                ),
+                ],
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _onButtonPressed() {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Column(
+            children: [
+              Icon(Icons.maximize),
+              SizedBox(
+                height: 5.0,
+              ),
+              Container(
+                height: 40.0,
+                width: 40.0,
+                decoration: BoxDecoration(
+                  border: Border.all(),
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: Icon(Icons.view_headline_outlined),
+              ),
+              Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(' Hi! I thought you might like this recipe.'),
+                    Text(' Https://vmt35.app.goo.gl/boQT'),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  TextButton(
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: Colors.grey[300],
+                      minimumSize: Size(160.0, 40.0),
+                    ),
+                    onPressed: null,
+                    child: Text('Nearby Share', style: TextStyle(color:
+                    Colors.black),),
+                  ),
+                  TextButton(
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: Colors.grey[300],
+                      minimumSize: Size(160.0, 40.0),
+                    ),
+                    onPressed: null,
+                    child: Text('Nearby Share', style: TextStyle(color:
+                    Colors.black),),
+                  ),
+                ],
+              ),
+              Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      Container(
+                        height: 70.0,
+                        width: 70.0,
+                        decoration: BoxDecoration(
+                          // color: Colors.purpleAccent,
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                        child: Image.asset('assets/images/instagram.png',
+                          fit: BoxFit.cover,),
+                      ),
+                      SizedBox(height: 5.0,),
+                      Text('Instagram', style: TextStyle(fontSize: 16.0),),
+                      Text('Direct', style: TextStyle(color: Colors.grey),),
+                    ],
+                  )
+                ],
+              ),
+            ],
+          );
+        });
   }
 }
